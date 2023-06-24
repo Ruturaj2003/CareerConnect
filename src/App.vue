@@ -1,11 +1,5 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
   <header>
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    <h1 class="mx-auto my-12 h-20 w-32 bg-slate-700 text-white">GG Well Played</h1>
   </header>
 </template>
