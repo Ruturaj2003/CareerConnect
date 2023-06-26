@@ -1,5 +1,18 @@
+<!-- Kebab Case main-nav main-task-bar for template -->
 <template>
   <header>
-    <h1 class="mx-auto my-12 h-20 w-32 bg-slate-700 text-white">GG Well Played</h1>
+    <main-nav />
   </header>
 </template>
+
+<script>
+import MainNav from '@/components/MainNav.vue';
+
+export default {
+  name: 'App',
+  components: {
+    // By ES6 We can just use MainNav instead of MainNav: MainNav, since it will just find it itself.
+    MainNav
+  }
+};
+</script>
