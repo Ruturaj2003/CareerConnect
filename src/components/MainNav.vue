@@ -13,20 +13,31 @@
             </li>
           </ul>
         </nav>
+        <div class="visited: items-cente r ml-auto flex h-full" >
+          <profile-image v-if="isLoggedIn"></profile-image>
+          <action-button v-else="!isLoggedIn"></action-button>
+        </div>
       </div>
     </div>
   </header>
 </template>
 
 <script>
+import ActionButton from './ActionButton.vue';
+import ProfileImage from './ProfileImage.vue';
 export default {
   name: 'MainNav',
+  components: {
+    ActionButton,
+    ProfileImage
+  },
   data() {
     return {
       company: 'CareerConnect',
       author: 'Ruturaj Bhandari',
       url: 'https://careers.google.com',
-      menuItems: ['Teams', 'Locations', 'Life at CareerConnect', 'How we hire', 'Students', 'Jobs']
+      menuItems: ['Teams', 'Locations', 'Life at CareerConnect', 'How we hire', 'Students', 'Jobs'],
+      isLoggedIn: false
     };
   }
 };
