@@ -13,9 +13,9 @@
             </li>
           </ul>
         </nav>
-        <div class="visited: items-cente r ml-auto flex h-full" >
+        <div class="visited: ml-auto flex h-full items-center">
           <profile-image v-if="isLoggedIn"></profile-image>
-          <action-button v-else="!isLoggedIn"></action-button>
+          <action-button text="Sign In" v-else v-on:click="loginUser"></action-button>
         </div>
       </div>
     </div>
@@ -39,6 +39,11 @@ export default {
       menuItems: ['Teams', 'Locations', 'Life at CareerConnect', 'How we hire', 'Students', 'Jobs'],
       isLoggedIn: false
     };
+  },
+  methods: {
+    loginUser() {
+      this.isLoggedIn = true;
+    }
   }
 };
 </script>

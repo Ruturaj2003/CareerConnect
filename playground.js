@@ -4,3 +4,4 @@ const dota =
   numbers.map((number) => {
     return number = number ** 2;
   });
+
