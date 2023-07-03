@@ -4,14 +4,23 @@ import MainNav from '@/components/MainNav.vue';
 import userEvent from '@testing-library/user-event';
 
 describe('Main Nav', () => {
+  const renderMainNav = () => {
+    render(MainNav, {
+      global: {
+        stubs: {
+          FontAwesomeIcon: true,
+        }
+      },
+    });
+  }
   it('displays company name', () => {
-    render(MainNav);
+    renderMainNav();
     const company = screen.getByText('CareerConnect');
     expect(company).toBeInTheDocument();
   });
 
   it('displays items for navigation', () => {
-    render(MainNav);
+    renderMainNav();
     const naviMenItems = screen.getAllByRole('listitem');
     const navMenTexts = naviMenItems.map((item) => {
       return item.textContent;
@@ -28,7 +37,7 @@ describe('Main Nav', () => {
   });
   describe('When the user logs in', () => {
     it('displays user profile picture', async () => {
-      render(MainNav);
+      renderMainNav();
       let profileImage = screen.queryByRole('img', {
         name: /user profile image/i
       });
