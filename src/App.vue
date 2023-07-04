@@ -1,18 +1,18 @@
 <!-- Kebab Case main-nav main-task-bar for template -->
 <template>
-  <header>
-    <main-nav />
-  </header>
+  <main-nav />
+  <the-hero></the-hero>
 </template>
 
 <script>
-import MainNav from '@/components/MainNav.vue';
-
+import MainNav from './components/MainNav.vue';
+import TheHero from './components/TheHero.vue';
 export default {
   name: 'App',
   components: {
     // By ES6 We can just use MainNav instead of MainNav: MainNav, since it will just find it itself.
-    MainNav
+    MainNav,
+    TheHero
   }
 };
 </script>
