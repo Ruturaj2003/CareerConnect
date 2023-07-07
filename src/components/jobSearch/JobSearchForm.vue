@@ -8,17 +8,9 @@
     <div class="flex h-full flex-1 flex-nowrap text-base font-light">
       <div class="relative flex h-full flex-1 items-center pr-3">
         <label class="absolute -top-10 left-0">Role</label>
-        <input
-          type="text"
-          name=""
-          id=" "
-          :value="role"
-          class="w-full text-lg font-normal focus:outline-none"
-          placeholder="Software Engineer"
-          v-on:input="updateRole"
-        />
+        <text-input v-model="role" placeholder="Software Engineer"></text-input>
       </div>
-      <!-- Way 1 of two way bind -->
+
       <span
         class="h-ful flex items-center border-l border-r border-brand-gray-3 bg-brand-gray-2 px-3"
       >
@@ -26,18 +18,7 @@
       </span>
       <div class="relative flex h-full flex-1 items-center pl-3">
         <label class="absolute -top-10 left-0">Role</label>
-        <input
-          v-model="location"
-          type="text"
-          name=""
-          id=" "
-          class="w-full text-lg font-normal focus:outline-none"
-          placeholder="Las Vegas"
-        />
-        <!-- way 3 UP -->
-        <!-- Way 2 of two way bind -->
-        <!-- :value="location"
-          @input="location = $event.target.value" -->
+        <text-input v-model="location" placeholder="Las Vegas"></text-input>
       </div>
     </div>
     <action-button type="secondary" text="Search" class="rounded-r-3xl"></action-button>
@@ -46,11 +27,13 @@
 
 <script>
 import ActionButton from '@/components/shared/ActionButton.vue';
+import TextInput from '@/components/shared/TextInput.vue';
 export default {
   name: 'JobSearchForm',
 
   components: {
-    ActionButton
+    ActionButton,
+    TextInput
   },
   data() {
     return {
@@ -58,10 +41,6 @@ export default {
       role: ''
     };
   },
-  methods: {
-    updateRole(event) {
-      this.role = event.target.value;
-    }
-  }
+  methods: {}
 };
 </script>
