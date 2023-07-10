@@ -8,8 +8,14 @@
 
         <nav class="ml-12 h-full">
           <ul class="flex h-full list-none">
-            <li class="ml-9 h-full first:ml-0" v-for="menuItem in menuItems" v-bind:key="menuItem">
-              <a href="" class="flex h-full items-center py-2.5">{{ menuItem }}</a>
+            <li
+              class="ml-9 h-full first:ml-0"
+              v-for="menuItem in menuItems"
+              v-bind:key="menuItem.text"
+            >
+              <router-link :to="menuItem.url" class="flex h-full items-center py-2.5">{{
+                menuItem.text
+              }}</router-link>
             </li>
           </ul>
         </nav>
@@ -37,7 +43,32 @@ export default {
   data() {
     return {
       author: 'Ruturaj Bhandari',
-      menuItems: ['Teams', 'Locations', 'Life at CareerConnect', 'How we hire', 'Students', 'Jobs'],
+      menuItems: [
+        {
+          text: 'Teams',
+          url: '/'
+        },
+        {
+          text: 'Locations',
+          url: '/'
+        },
+        {
+          text: 'Life at CareerConnect',
+          url: '/'
+        },
+        {
+          text: 'How we hire',
+          url: '/'
+        },
+        {
+          text: 'Students',
+          url: '/'
+        },
+        {
+          text: 'Jobs',
+          url: '/jobs/results'
+        }
+      ],
       isLoggedIn: false
     };
   },

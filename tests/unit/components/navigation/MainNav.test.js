@@ -5,16 +5,23 @@ import MainNav from '@/components/navigation/MainNav.vue';
 import userEvent from '@testing-library/user-event';
 
 describe('Main Nav', () => {
+
   const renderMainNav = () => {
+    const $route = {
+      name: "Home"
+    };
     render(MainNav, {
       global: {
+        mocks: {
+          $route,
+        },
         stubs: {
           FontAwesomeIcon: true,
-          RouterLink: RouterLinkStub,
+          RouterLink: RouterLinkStub
         }
-      },
+      }
     });
-  }
+  };
   it('displays company name', () => {
     renderMainNav();
     const company = screen.getByText('CareerConnect');
@@ -22,6 +29,7 @@ describe('Main Nav', () => {
   });
 
   it('displays items for navigation', () => {
+
     renderMainNav();
     const naviMenItems = screen.getAllByRole('listitem');
     const navMenTexts = naviMenItems.map((item) => {

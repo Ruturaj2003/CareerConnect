@@ -4,6 +4,8 @@ import HomeView from '@/views/HomeView.vue';
 
 import JobResultsView from '@/views/JobResultsView.vue';
 
+import JobView from '@/views/JobView.vue';
+
 const routes = [
   {
     name: 'Home',
@@ -14,6 +16,11 @@ const routes = [
     name: 'JobResults',
     path: '/jobs/results',
     component: JobResultsView
+  },
+  {
+    name: 'JobListing',
+    path: '/jobs/results/:id',
+    component: JobView
   }
 ];
 

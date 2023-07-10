@@ -2,13 +2,14 @@
   <!-- Overflow Hioden Added  ref-158 -->
   <form
     class="flex h-12 w-full items-center overflow-hidden rounded-3xl border border-solid border-brand-gray-3"
+    @submit.prevent="searchForJobs"
   >
     <font-awesome-icon :icon="['fas', 'search']" class="ml-4 mr-3"></font-awesome-icon>
     <!-- Flex 1 will let them occupy all space -->
     <div class="flex h-full flex-1 flex-nowrap text-base font-light">
       <div class="relative flex h-full flex-1 items-center pr-3">
-        <label class="absolute -top-10 left-0">Role</label>
-        <text-input v-model="role" placeholder="Software Engineer"></text-input>
+        <label for="role" class="absolute -top-10 left-0">Role</label>
+        <text-input id="role" v-model="role" placeholder="Software Engineer"></text-input>
       </div>
 
       <span
@@ -17,8 +18,8 @@
         in
       </span>
       <div class="relative flex h-full flex-1 items-center pl-3">
-        <label class="absolute -top-10 left-0">Role</label>
-        <text-input v-model="location" placeholder="Las Vegas"></text-input>
+        <label for="location" class="absolute -top-10 left-0">Where?</label>
+        <text-input id="location" v-model="location" placeholder="Las Vegas"></text-input>
       </div>
     </div>
     <action-button type="secondary" text="Search" class="rounded-r-3xl"></action-button>
@@ -41,6 +42,16 @@ export default {
       role: ''
     };
   },
-  methods: {}
+  methods: {
+    searchForJobs() {
+      this.$router.push({
+        name: 'JobResults',
+        query: {
+          role: this.role,
+          location: this.location
+        }
+      });
+    }
+  }
 };
 </script>
