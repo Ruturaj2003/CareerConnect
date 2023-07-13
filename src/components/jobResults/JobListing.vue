@@ -1,17 +1,21 @@
 <template>
   <li class="mb-7">
     <router-link
-      to="/jobs/results/1"
+      :to="jobPageLink"
       class="mx-auto block rounded border border-solid border-brand-gray-2 bg-white hover:shadow-gray"
     >
       <div class="mx-8 border-b border-solid border-brand-gray-2 pb-2 pt-5">
-        <h2>Technical Program Manager, Perception , Augmented Reality</h2>
+        <h2>{{ job.title }}</h2>
         <div class="flex align-middle">
           <div class="mr-5">
-            <span>CarrerConnnect</span>
+            <span>{{ job.organization }}</span>
           </div>
           <div>
-            <span> San Francisco, CA , USA </span>
+            <ul>
+              <li v-for="loc in job.locations" :key="loc" class="mr-5 inline-block">
+                <span>{{ loc }}</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -20,16 +24,12 @@
           <h3 class="mb-2 mt-1">Qualifications</h3>
           <div>
             <ul class="list-disc pl-8">
-              <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. At tenetur mollitia</li>
-              <li>
-                iure vero incidunt beatae eveniet sint in temporibus id facere, fuga cupiditate
-              </li>
-              <li>deleniti, nostrum sed iusto, praesentium</li>
+              <li v-for="qual in job.minimumQualifications" :key="qual">{{ qual }}</li>
             </ul>
           </div>
         </div>
         <div class="mt-2 text-center">
-          <router-link to="/jobs/results/1" class="text-brand-blue-1">Expand </router-link>
+          <router-link :to="jobPageLink" class="text-brand-blue-1">Expand </router-link>
         </div>
       </div>
     </router-link>
@@ -38,6 +38,17 @@
 
 <script>
 export default {
-  name: 'JobListing'
+  name: 'JobListing',
+  props: {
+    job: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    jobPageLink() {
+      return `/jobs/results/${this.job.id}`;
+    }
+  }
 };
 </script>
