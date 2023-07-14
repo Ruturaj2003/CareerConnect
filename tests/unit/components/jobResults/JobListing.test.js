@@ -28,9 +28,9 @@ describe("JobListing", () => {
   };
 
   it("renders job title", () => {
-    const jobProps = createJobProps({ title: "Vue Programmer" });
+    const jobProps = createJobProps({ title: "The Vue Programmer" });
     renderJobListing(jobProps);
-    expect(screen.getByText("Vue Programmer")).toBeInTheDocument();
+    expect(screen.getByText("The Vue Programmer")).toBeInTheDocument();
   });
 
   it("renders job organization", () => {
