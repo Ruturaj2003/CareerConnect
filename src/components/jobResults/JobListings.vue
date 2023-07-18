@@ -8,6 +8,7 @@
         <p class="flex-grow text-sm">Page {{ currentPage }}</p>
         <div class="flex items-center justify-center">
           <router-link
+            role="link"
             class="mx-3 text-sm font-semibold text-brand-blue-1"
             v-if="previousPage"
             :to="{
@@ -20,6 +21,7 @@
             Previous
           </router-link>
           <router-link
+            role="link"
             class="mx-3 text-sm font-semibold text-brand-blue-1"
             v-if="nextPage"
             :to="{
@@ -61,7 +63,7 @@ export default {
     },
     nextPage() {
       const nextPage = this.currentPage + 1;
-      const lastPage = this.jobs.length / 10;
+      const lastPage = Math.ceil(this.jobs.length / 10);
       return nextPage <= lastPage ? nextPage : undefined;
     },
     displayedJobs() {
@@ -73,8 +75,9 @@ export default {
     }
   },
   async mounted() {
+    const baseUrl = import.meta.env.VITE_APP_API_URL;
     // The extra space is so that the test passes , ie : bug
-    const response = await axios.get('  http://localhost:3000/jobs');
+    const response = await axios.get(`${baseUrl}/jobs`);
     this.jobs = response.data;
   }
 };
