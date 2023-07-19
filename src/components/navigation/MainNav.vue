@@ -20,8 +20,8 @@
           </ul>
         </nav>
         <div class="visited: ml-auto flex h-full items-center">
-          <profile-image v-if="isLoggedIn"></profile-image>
-          <action-button text="Sign In" v-else v-on:click="loginUser"></action-button>
+          <profile-image v-if="userStore.isLoggedIn"></profile-image>
+          <action-button text="Sign In" v-else v-on:click="userStore.loginUser"></action-button>
         </div>
       </div>
       <the-sub-nav v-if="isLoggedIn"></the-sub-nav>
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia';
+import { useUserStore } from '@/stores/user.js';
 import ActionButton from '@/components/shared/ActionButton.vue';
 import ProfileImage from './ProfileImage.vue';
 import TheSubNav from './TheSubNav.vue';
@@ -68,21 +70,16 @@ export default {
           text: 'Jobs',
           url: '/jobs/results'
         }
-      ],
-      isLoggedIn: false
+      ]
     };
   },
   computed: {
+    ...mapStores(useUserStore), //userStore we have acess to.
     headerHeightClass() {
       return {
-        'h-16': !this.isLoggedIn,
-        'h-32': this.isLoggedIn
+        'h-16': this.userStore.isLoggedIn,
+        'h-32': this.userStore.isLoggedIn
       };
-    }
-  },
-  methods: {
-    loginUser() {
-      this.isLoggedIn = true;
     }
   }
 };
