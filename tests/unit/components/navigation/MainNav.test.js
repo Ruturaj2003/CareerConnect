@@ -1,19 +1,21 @@
 import { render, screen } from '@testing-library/vue';
 import { RouterLinkStub } from '@vue/test-utils';
+import { createTestingPinia } from '@pinia/testing';
+import { useUserStore } from '@/stores/user';
 import MainNav from '@/components/navigation/MainNav.vue';
 
 import userEvent from '@testing-library/user-event';
 
 describe('Main Nav', () => {
-
   const renderMainNav = () => {
+    const pinia = createTestingPinia();
     const $route = {
-      name: "Home"
+      name: 'Home'
     };
     render(MainNav, {
       global: {
         mocks: {
-          $route,
+          $route
         },
         stubs: {
           FontAwesomeIcon: true,
@@ -29,7 +31,6 @@ describe('Main Nav', () => {
   });
 
   it('displays items for navigation', () => {
-
     renderMainNav();
     const naviMenItems = screen.getAllByRole('listitem');
     const navMenTexts = naviMenItems.map((item) => {
@@ -48,6 +49,7 @@ describe('Main Nav', () => {
   describe('When the user logs in', () => {
     it('displays user profile picture', async () => {
       renderMainNav();
+      const userStore = useUserStore();
       let profileImage = screen.queryByRole('img', {
         name: /user profile image/i
       });
@@ -56,6 +58,7 @@ describe('Main Nav', () => {
       const logInButton = screen.getByRole('button', {
         name: /sign in/i
       });
+      userStore.isLoggedIn = true;
       await userEvent.click(logInButton);
 
       profileImage = screen.getByRole('img', {
