@@ -23,9 +23,9 @@
       <template v-slot:default="slotProps">
         <router-link
           to="/jobs/results"
-          class="mx-5 flex h-96 w-72 flex-col rounded-lg border bg-brand-gray-2"
+          class="mx-5 flex h-96 w-72 flex-col rounded-lg border border-brand-gray-1 bg-brand-gray-2"
         >
-          <img :src="slotProps.spotlight.img" class="object-contain" />
+          <img :src="slotProps.spotlight.img" class="rounded-t-md object-contain" />
           <div class="mt-3 h-48 px-6 py-4">
             <h3 class="text-lg font-medium">{{ slotProps.spotlight.title }}</h3>
 
