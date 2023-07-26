@@ -10,6 +10,12 @@ describe('state', () => {
     const store = useUserStore();
     expect(store.isLoggedIn).toBe(false);
   });
+
+  it('stores organizations that user would like to filter jobs by', () => {
+    const store = useUserStore()
+    expect(store.selectedOrganizations).toEqual([])
+
+  });
 });
 
 describe('actions', () => {

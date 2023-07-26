@@ -28,7 +28,7 @@ describe('JobFiltersSidebarOrganizations', () => {
     const { jobsStore } = renderJobFiltersSidebarOrganizations();
     jobsStore.UNIQUE_ORGANIZATIONS = new Set(['Google', 'Amazon']);
 
-    const button = screen.getByRole('button', { name: /organizations/i });
+    const button = screen.getByRole('button', { name: /organization/i });
     await userEvent.click(button);
 
     const organizationListItems = screen.getAllByRole('listitem');
@@ -40,7 +40,7 @@ describe('JobFiltersSidebarOrganizations', () => {
     const { jobsStore, userStore } = renderJobFiltersSidebarOrganizations();
     jobsStore.UNIQUE_ORGANIZATIONS = new Set(['Google', 'Amazon']);
 
-    const button = screen.getByRole('button', { name: /organizations/i });
+    const button = screen.getByRole('button', { name: /organization/i });
     await userEvent.click(button);
 
     const googleCheckbox = screen.getByRole('checkbox', {
