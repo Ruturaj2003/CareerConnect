@@ -50,6 +50,53 @@ describe('getters', () => {
 
       expect(result).toEqual(new Set(['Google', 'Amazon']));
     });
+
+    describe('UNIQUE_JOB_TYPES', () => {
+      it('finds unique job types from list of jobs', () => {
+        const store = useJobsStore();
+        store.jobs = [{ jobType: 'Full-time' }, { jobType: 'Intern' }, { jobType: 'Full-time' }];
+        const result = store.UNIQUE_JOB_TYPES;
+        expect(result).toEqual(new Set(['Full-time', 'Intern']));
+      });
+    });
+
+    describe('FILTERED_JOBS_BY_JOB_TYPES', () => {
+      it('Identifes jobs that are associated with the given jobtypes', () => {
+        const jobsStore = useJobsStore();
+        jobsStore.jobs = [
+          { jobType: 'Intern' },
+          { jobType: 'Full-time' },
+          { jobType: 'Part-time' }
+        ];
+
+        const userStore = useUserStore();
+        userStore.selectedJobTypes = ['Intern', 'Part-time'];
+
+        const result = jobsStore.FILTERED_JOBS_BY_JOB_TYPES;
+        expect(result).toEqual([{ jobType: 'Intern' }, { jobType: 'Part-time' }]);
+      });
+    });
+
+    describe("When the user hasn't selected any jobTypes", () =>
+      it('Returns all jobs', () => {
+        const jobsStore = useJobsStore();
+        jobsStore.jobs = [
+          { jobType: 'Intern' },
+          { jobType: 'Full-time' },
+          { jobType: 'Part-time' }
+        ];
+
+        const userStore = useUserStore();
+        userStore.selectedOrganizations = [];
+
+        const result = jobsStore.FILTERED_JOBS_BY_ORGANIZATIONS;
+        expect(result).toEqual([
+          { jobType: 'Intern' },
+          { jobType: 'Full-time' },
+          { jobType: 'Part-time' }
+        ]);
+      }));
+
     describe('FILTERED_JOBS_BY_ORGANIZATIONS', () => {
       it('Identifes jobs that are associated with the given organizations', () => {
         const jobsStore = useJobsStore();

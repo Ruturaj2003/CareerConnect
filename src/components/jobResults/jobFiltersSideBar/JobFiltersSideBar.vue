@@ -7,6 +7,7 @@
           <action-button text="Clear Filters" type="secondary"></action-button>
         </div>
       </div>
+      <!-- <job-filters-side-bar-job-types></job-filters-side-bar-job-types> -->
       <job-filters-side-bar-organizations></job-filters-side-bar-organizations>
     </section>
   </div>
@@ -16,8 +17,15 @@
 import ActionButton from '@/components/shared/ActionButton.vue';
 import CollapsibleAccordion from '@/components/shared/CollapsibleAccordion.vue';
 import JobFiltersSideBarOrganizations from '@/components/jobResults/jobFiltersSideBar/JobFiltersSideBarOrganizations.vue';
+//import JobFiltersSideBarJobTypes from '@/components/jobResults/jobFiltersSideBar/JobFiltersSideBarJobTypes.vue';
+
 export default {
   name: 'JobFiltersSideBar',
-  components: { ActionButton, CollapsibleAccordion, JobFiltersSideBarOrganizations }
+  components: {
+    ActionButton,
+    CollapsibleAccordion,
+    JobFiltersSideBarOrganizations
+    //JobFiltersSideBarJobTypes
+  }
 };
 </script>
