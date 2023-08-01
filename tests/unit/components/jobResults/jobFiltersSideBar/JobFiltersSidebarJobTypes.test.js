@@ -1,76 +1,76 @@
-import { render, screen } from "@testing-library/vue";
-import userEvent from "@testing-library/user-event";
-import { createTestingPinia } from "@pinia/testing";
+import { render, screen } from '@testing-library/vue';
+import userEvent from '@testing-library/user-event';
+import { createTestingPinia } from '@pinia/testing';
 
-import JobFiltersSidebarJobTypes from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobTypes.vue";
-import { useJobsStore } from "@/stores/jobs";
-import { useUserStore } from "@/stores/user";
+import JobFiltersSidebarJobTypes from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobTypes.vue';
+import { useJobsStore } from '@/stores/jobs';
+import { useUserStore } from '@/stores/user';
+import { useRouter } from 'vue-router';
 
-describe("JobFiltersSidebarJobTypes", () => {
+vi.mock('vue-router');
+
+describe('JobFiltersSidebarJobTypes', () => {
   const renderJobFiltersSidebarJobTypes = () => {
     const pinia = createTestingPinia();
     const userStore = useUserStore();
     const jobsStore = useJobsStore();
-    const $router = { push: vi.fn() };
 
     render(JobFiltersSidebarJobTypes, {
       global: {
-        mocks: {
-          $router,
-        },
         plugins: [pinia],
         stubs: {
-          FontAwesomeIcon: true,
-        },
-      },
+          FontAwesomeIcon: true
+        }
+      }
     });
 
-    return { jobsStore, userStore, $router };
+    return { jobsStore, userStore, };
   };
 
-  it("renders unique list of job types from jobs", async () => {
+  it('renders unique list of job types from jobs', async () => {
     const { jobsStore } = renderJobFiltersSidebarJobTypes();
-    jobsStore.UNIQUE_JOB_TYPES = new Set(["Full-time", "Part-time"]);
+    jobsStore.UNIQUE_JOB_TYPES = new Set(['Full-time', 'Part-time']);
 
-    const button = screen.getByRole("button", { name: /job types/i });
+    const button = screen.getByRole('button', { name: /job types/i });
     await userEvent.click(button);
 
-    const jobTypesListItems = screen.getAllByRole("listitem");
+    const jobTypesListItems = screen.getAllByRole('listitem');
     const jobTypes = jobTypesListItems.map((node) => node.textContent);
-    expect(jobTypes).toEqual(["Full-time", "Part-time"]);
+    expect(jobTypes).toEqual(['Full-time', 'Part-time']);
   });
 
-  describe("when user clicks checkbox", () => {
-    it("communicates that user has selected checkbox for job type", async () => {
+  describe('when user clicks checkbox', () => {
+    it('communicates that user has selected checkbox for job type', async () => {
+      useRouter.mockReturnValue({ push: vi.fn() })
       const { jobsStore, userStore } = renderJobFiltersSidebarJobTypes();
-      jobsStore.UNIQUE_JOB_TYPES = new Set(["Full-time", "Part-time"]);
+      jobsStore.UNIQUE_JOB_TYPES = new Set(['Full-time', 'Part-time']);
 
-      const button = screen.getByRole("button", { name: /job types/i });
+      const button = screen.getByRole('button', { name: /job types/i });
       await userEvent.click(button);
 
-      const fullTimeCheckbox = screen.getByRole("checkbox", {
-        name: /full-time/i,
+      const fullTimeCheckbox = screen.getByRole('checkbox', {
+        name: /full-time/i
       });
       await userEvent.click(fullTimeCheckbox);
 
-      expect(userStore.ADD_SELECTED_JOB_TYPES).toHaveBeenCalledWith([
-        "Full-time",
-      ]);
+      expect(userStore.ADD_SELECTED_JOB_TYPES).toHaveBeenCalledWith(['Full-time']);
     });
 
-    it("navigates user to job results page to see fresh batch of filtered jobs", async () => {
-      const { jobsStore, $router } = renderJobFiltersSidebarJobTypes();
-      jobsStore.UNIQUE_JOB_TYPES = new Set(["Full-time"]);
+    it('navigates user to job results page to see fresh batch of filtered jobs', async () => {
+      const push = vi.fn()
+      useRouter.mockReturnValue({ push })
+      const { jobsStore } = renderJobFiltersSidebarJobTypes();
+      jobsStore.UNIQUE_JOB_TYPES = new Set(['Full-time']);
 
-      const button = screen.getByRole("button", { name: /job types/i });
+      const button = screen.getByRole('button', { name: /job types/i });
       await userEvent.click(button);
 
-      const fullTimeCheckbox = screen.getByRole("checkbox", {
-        name: /full-time/i,
+      const fullTimeCheckbox = screen.getByRole('checkbox', {
+        name: /full-time/i
       });
       await userEvent.click(fullTimeCheckbox);
 
-      expect($router.push).toHaveBeenCalledWith({ name: "JobResults" });
+      expect(push).toHaveBeenCalledWith({ name: 'JobResults' });
     });
   });
 });
