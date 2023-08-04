@@ -25,9 +25,7 @@
 <script setup>
 import { computed } from 'vue';
 import ActionButton from '@/components/shared/ActionButton.vue';
-import CollapsibleAccordion from '@/components/shared/CollapsibleAccordion.vue';
-import JobFiltersSideBarOrganizations from '@/components/jobResults/jobFiltersSideBar/JobFiltersSideBarOrganizations.vue';
-import JobFiltersSideBarJobTypes from '@/components/jobResults/jobFiltersSideBar/JobFiltersSideBarJobTypes.vue';
+
 import JobFiltersSideBarCheckboxGroup from '@/components/jobResults/jobFiltersSideBar/JobFiltersSideBarCheckboxGroup.vue';
 import { useJobsStore } from '@/stores/jobs';
 import { useUserStore } from '@/stores/user';
