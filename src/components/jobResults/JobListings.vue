@@ -44,6 +44,7 @@ import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useJobsStore } from '@/stores/jobs';
 import JobListing from '@/components/JobResults/JobListing.vue';
+import usePreviousAndNextPages from '@/composables/usePreviousAndNextPages';
 
 const jobStore = useJobsStore();
 onMounted(jobStore.FETCH_JOBS);
@@ -53,21 +54,15 @@ const currentPage = computed(() => {
   return Number.parseInt(route.query.page || '1');
 });
 
-const previousPage = computed(() => {
-  const previousPage = currentPage.value - 1;
-  const firstPage = 1;
-  return previousPage >= firstPage ? previousPage : undefined;
-});
-
 const FILTERED_JOBS = computed(() => {
   return jobStore.FILTERED_JOBS;
 });
 
-const nextPage = computed(() => {
-  const nextPage = currentPage.value + 1;
-  const lastPage = Math.ceil(FILTERED_JOBS.value.length / 10);
-  return nextPage <= lastPage ? nextPage : undefined;
+const lastPage = computed(() => {
+  return Math.ceil(FILTERED_JOBS.value.length / 10);
 });
+
+const { previousPage, nextPage } = usePreviousAndNextPages(currentPage, lastPage);
 
 const displayedJobs = computed(() => {
   const pageNumber = currentPage.value;
