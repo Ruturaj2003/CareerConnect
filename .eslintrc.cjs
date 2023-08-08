@@ -3,8 +3,13 @@ require('@rushstack/eslint-patch/modern-module-resolution');
 
 module.exports = {
   root: true,
-  extends: ['plugin:vue/vue3-recommended', 'eslint:recommended',
-    '@vue/eslint-config-prettier', 'plugin:vitest-globals/recommended'],
+  extends: [
+    'plugin:vue/vue3-recommended',
+    'eslint:recommended',
+    '@vue/eslint-config-typescript',
+    '@vue/eslint-config-prettier',
+    'plugin:vitest-globals/recommended'
+  ],
   parserOptions: {
     ecmaVersion: 'latest'
   },
@@ -15,15 +20,15 @@ module.exports = {
     es6: true,
     browser: true,
     es2021: true,
-    "vitest-globals/env": true,
+    'vitest-globals/env': true
   },
   extends: ['airbnb-base', 'prettier'],
   parserOptions: {
     ecmaVersion: 12,
-    sourceType: 'module',
+    sourceType: 'module'
   },
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': 'error'
   },
-  plugins: ['prettier'],
+  plugins: ['prettier']
 };
