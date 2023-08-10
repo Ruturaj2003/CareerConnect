@@ -1,19 +1,26 @@
+import type { Mock } from 'vitest';
 import { render, screen } from '@testing-library/vue';
+import userEvent from '@testing-library/user-event';
 import { RouterLinkStub } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
-import { useUserStore } from '@/stores/user';
-import { useRoute } from 'vue-router';
-import MainNav from '@/components/navigation/MainNav.vue';
 
-import userEvent from '@testing-library/user-event';
+import { useRoute } from 'vue-router';
 vi.mock('vue-router');
-describe('Main Nav', () => {
+
+import MainNav from '@/components/navigation/MainNav.vue';
+import { useUserStore } from '@/stores/user';
+
+const useRouteMock = useRoute as Mock;
+
+describe('MainNav', () => {
   const renderMainNav = () => {
-    useRoute.mockReturnValue({ name: 'Home' });
+    useRouteMock.mockReturnValue({ name: 'Home' });
+
     const pinia = createTestingPinia();
 
     render(MainNav, {
       global: {
+        plugins: [pinia],
         stubs: {
           FontAwesomeIcon: true,
           RouterLink: RouterLinkStub
@@ -21,42 +28,42 @@ describe('Main Nav', () => {
       }
     });
   };
+
   it('displays company name', () => {
     renderMainNav();
-    const company = screen.getByText('CareerConnect');
-    expect(company).toBeInTheDocument();
+    const companyName = screen.getByText('Bobo Careers');
+    expect(companyName).toBeInTheDocument();
   });
 
-  it('displays items for navigation', () => {
+  it('displays menu items for navigation', () => {
     renderMainNav();
-    const naviMenItems = screen.getAllByRole('listitem');
-    const navMenTexts = naviMenItems.map((item) => {
-      return item.textContent;
-    });
-    expect(navMenTexts).toEqual([
+    const navigationMenuItems = screen.getAllByRole('listitem');
+    const navigationMenuTexts = navigationMenuItems.map((item) => item.textContent);
+    expect(navigationMenuTexts).toEqual([
       'Teams',
       'Locations',
-      'Life at CareerConnect',
+      'Life at Bobo Corp',
       'How we hire',
       'Students',
       'Jobs'
     ]);
-    console.log(navMenTexts);
   });
-  describe('When the user logs in', () => {
+
+  describe('when the user logs in', () => {
     it('displays user profile picture', async () => {
       renderMainNav();
       const userStore = useUserStore();
+
       let profileImage = screen.queryByRole('img', {
         name: /user profile image/i
       });
       expect(profileImage).not.toBeInTheDocument();
 
-      const logInButton = screen.getByRole('button', {
+      const loginButton = screen.getByRole('button', {
         name: /sign in/i
       });
       userStore.isLoggedIn = true;
-      await userEvent.click(logInButton);
+      await userEvent.click(loginButton);
 
       profileImage = screen.getByRole('img', {
         name: /user profile image/i

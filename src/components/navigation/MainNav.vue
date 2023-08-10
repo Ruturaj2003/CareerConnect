@@ -29,62 +29,50 @@
   </header>
 </template>
 
-<script>
-import { mapActions, mapState } from 'pinia';
+<script lang="ts" setup>
+import { ref, computed } from 'vue';
+
 import { useUserStore } from '@/stores/user.js';
 import ActionButton from '@/components/shared/ActionButton.vue';
 import ProfileImage from './ProfileImage.vue';
 import TheSubNav from './TheSubNav.vue';
-export default {
-  name: 'MainNav',
-  components: {
-    ActionButton,
-    ProfileImage,
-    TheSubNav
+
+const author: string = 'Ruturaj Bhandari';
+const menuItem = ref([
+  {
+    text: 'Teams',
+    url: '/teams'
   },
-  data() {
-    return {
-      author: 'Ruturaj Bhandari',
-      menuItems: [
-        {
-          text: 'Teams',
-          url: '/teams'
-        },
-        {
-          text: 'Locations',
-          url: '/'
-        },
-        {
-          text: 'Life at CareerConnect',
-          url: '/'
-        },
-        {
-          text: 'How we hire',
-          url: '/'
-        },
-        {
-          text: 'Students',
-          url: '/'
-        },
-        {
-          text: 'Jobs',
-          url: '/jobs/results'
-        }
-      ]
-    };
+  {
+    text: 'Locations',
+    url: '/'
   },
-  computed: {
-    // ...mapStores(useUserStore), //userStore we have acess to.
-    ...mapState(useUserStore, ['isLoggedIn']),
-    headerHeightClass() {
-      return {
-        'h-16': !this.isLoggedIn,
-        'h-32': this.isLoggedIn
-      };
-    }
+  {
+    text: 'Life at CareerConnect',
+    url: '/'
   },
-  methods: {
-    ...mapActions(useUserStore, ['loginUser'])
+  {
+    text: 'How we hire',
+    url: '/'
+  },
+  {
+    text: 'Students',
+    url: '/'
+  },
+  {
+    text: 'Jobs',
+    url: '/jobs/results'
   }
-};
+]);
+
+const userStore = useUserStore();
+const loginUser = userStore.loginUser;
+const isLoggedIn = computed(() => {
+  return userStore.isLoggedIn;
+});
+
+const headerHeightClass = computed(() => ({
+  'h-16': isLoggedIn.value,
+  'h-32': isLoggedIn.value
+}));
 </script>
