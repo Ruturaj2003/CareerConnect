@@ -20,7 +20,7 @@
   </collapsible-accordion>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import CollapsibleAccordion from '@/components/shared/CollapsibleAccordion.vue';
@@ -31,7 +31,7 @@ const props = defineProps({
     required: true
   },
   uniqueValues: {
-    type: Set,
+    type: Set<string>,
     required: true
   },
   action: {
@@ -40,7 +40,7 @@ const props = defineProps({
   }
 });
 
-const selectedValues = ref([]);
+const selectedValues = ref<string[]>([]);
 
 const router = useRouter();
 
@@ -49,14 +49,3 @@ const selectValue = () => {
   router.push({ name: 'JobResults' });
 };
 </script>
-
-<!-- 
-  const userStore = useUserStore();
-//const selectedJobTypes = ref([]);
-// const jobStore = useJobsStore();
-// const UNIQUE_JOB_TYPES = computed(() => {
-//   return jobStore.UNIQUE_JOB_TYPES;
-
-  userStore.ADD_SELECTED_JOB_TYPES(selectedJobTypes.value);
-
-// }); -->

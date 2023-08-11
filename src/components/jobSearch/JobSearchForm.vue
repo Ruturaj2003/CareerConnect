@@ -26,14 +26,14 @@
   </form>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import ActionButton from '@/components/shared/ActionButton.vue';
 import TextInput from '@/components/shared/TextInput.vue';
 
-const role = ref('');
-const location = ref('');
+const role = ref<string>('');
+const location = ref<string>('');
 const router = useRouter();
 const searchForJobs = () => {
   router.push({

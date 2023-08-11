@@ -1,22 +1,30 @@
 <template>
   <ul>
-    <li v-for="spotLight in spotLights" :key="spotLight.id">
+    <li v-for="spotLight in spotlights" :key="spotLight.id">
       <slot :spotlight="spotLight"></slot>
     </li>
   </ul>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 
-const spotLights = ref([]);
+interface Spotlight {
+  id: number;
+  img: string;
+  title: string;
+  description: string;
+}
+
+const spotlights = ref<Spotlight[]>([]);
 
 const getSpotlights = async () => {
   const baseUrl = import.meta.env.VITE_APP_API_URL;
-  const url = `${baseUrl}/spotLights`;
-  const response = await axios.get(url);
-  spotLights.value = response.data;
+  const url = `${baseUrl}/spotlights`;
+  const response = await axios.get<Spotlight[]>(url);
+  spotlights.value = response.data;
 };
+
 onMounted(getSpotlights);
 </script>

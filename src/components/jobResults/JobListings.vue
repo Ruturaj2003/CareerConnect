@@ -39,11 +39,11 @@
   </main>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useJobsStore } from '@/stores/jobs';
-import JobListing from '@/components/JobResults/JobListing.vue';
+import JobListing from '@/components/jobResults/JobListing.vue';
 import usePreviousAndNextPages from '@/composables/usePreviousAndNextPages';
 
 const jobStore = useJobsStore();
@@ -51,7 +51,7 @@ onMounted(jobStore.FETCH_JOBS);
 
 const route = useRoute();
 const currentPage = computed(() => {
-  return Number.parseInt(route.query.page || '1');
+  return Number.parseInt((route.query.page as string) || '1');
 });
 
 const FILTERED_JOBS = computed(() => {

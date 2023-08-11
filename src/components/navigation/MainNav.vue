@@ -38,7 +38,7 @@ import ProfileImage from './ProfileImage.vue';
 import TheSubNav from './TheSubNav.vue';
 
 const author: string = 'Ruturaj Bhandari';
-const menuItem = ref([
+const menuItems = ref([
   {
     text: 'Teams',
     url: '/teams'
@@ -72,7 +72,7 @@ const isLoggedIn = computed(() => {
 });
 
 const headerHeightClass = computed(() => ({
-  'h-16': isLoggedIn.value,
+  'h-16': !isLoggedIn.value,
   'h-32': isLoggedIn.value
 }));
 </script>

@@ -10,9 +10,3 @@ import HeaderContainer from '@/components/shared/HeaderContainer.vue'
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'HeaderContainer'
-};
-</script>

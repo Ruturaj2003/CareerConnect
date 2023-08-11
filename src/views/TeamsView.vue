@@ -10,13 +10,6 @@
   </header-container>
 </template>
 
-<script>
+<script lang="ts" setup>
 import HeaderContainer from '@/components/shared/HeaderContainer.vue';
-export default {
-  name: 'TeamsView',
-  components: {
-    HeaderContainer
-  }
-};
 </script>
-<!-- ES6 is # instead of v-slot -->

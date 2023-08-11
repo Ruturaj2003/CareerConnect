@@ -22,7 +22,7 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { computed } from 'vue';
 import ActionButton from '@/components/shared/ActionButton.vue';
 
