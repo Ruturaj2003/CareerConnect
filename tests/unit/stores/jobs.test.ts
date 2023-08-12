@@ -2,7 +2,6 @@ import type { Mock } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import axios from 'axios';
 
-import type { Job } from '@/api/types';
 import { useJobsStore } from '@/stores/jobs';
 import { useUserStore } from '@/stores/user';
 import { createJob } from '../../utils/createJobs';
@@ -118,6 +117,32 @@ describe('getters', () => {
       const job = createJob({ jobType: 'Part-time' });
 
       const result = store.INCLUDE_JOB_BY_JOB_TYPE(job);
+
+      expect(result).toBe(true);
+    });
+  });
+
+  describe('INCLUDE_JOB_BY_DEGREE', () => {
+    describe('when the user has not selected any degrees', () => {
+      it('includes job', () => {
+        const userStore = useUserStore();
+        userStore.selectedDegrees = [];
+        const store = useJobsStore();
+        const job = createJob();
+
+        const result = store.INCLUDE_JOB_BY_DEGREE(job);
+
+        expect(result).toBe(true);
+      });
+    });
+
+    it('identifies if job is associated with given degrees', () => {
+      const userStore = useUserStore();
+      userStore.selectedDegrees = ["Master's"];
+      const store = useJobsStore();
+      const job = createJob({ degree: "Master's" });
+
+      const result = store.INCLUDE_JOB_BY_DEGREE(job);
 
       expect(result).toBe(true);
     });

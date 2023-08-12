@@ -35,18 +35,18 @@ describe('MainNav', () => {
     expect(companyName).toBeInTheDocument();
   });
 
-  it.only('displays menu items for navigation', () => {
+  it('displays menu items for navigation', () => {
     renderMainNav();
     const navigationMenuItems = screen.getAllByRole('listitem');
     const navigationMenuTexts = navigationMenuItems.map((item) => item.textContent);
-    // expect(navigationMenuTexts).toEqual([
-    //   'Teams',
-    //   'Locations',
-    //   'Life at Bobo Corp',
-    //   'How we hire',
-    //   'Students',
-    //   'Jobs'
-    // ]);
+    expect(navigationMenuTexts).toEqual([
+      'Teams',
+      'Locations',
+      'Life at CareerConnect',
+      'How we hire',
+      'Students',
+      'Jobs'
+    ]);
   });
 
   describe('when the user logs in', () => {

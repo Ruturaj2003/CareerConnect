@@ -1,20 +1,23 @@
+import type { Mock } from 'vitest';
 import { render, screen } from '@testing-library/vue';
 import { RouterLinkStub } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import { useRoute } from 'vue-router';
-import type { Mock } from 'vitest';
 vi.mock('vue-router');
 
 import JobListings from '@/components/jobResults/JobListings.vue';
+import { useDegreesStore } from '@/stores/degrees';
 import { useJobsStore } from '@/stores/jobs';
 
 const useRouteMock = useRoute as Mock;
+
 describe('JobListings', () => {
   const renderJobListings = () => {
     const pinia = createTestingPinia();
     const jobsStore = useJobsStore();
-    //@ts-expect-error
+    // @ts-expect-error
     jobsStore.FILTERED_JOBS = Array(15).fill({});
+    const degreesStore = useDegreesStore();
 
     render(JobListings, {
       global: {
@@ -25,7 +28,7 @@ describe('JobListings', () => {
       }
     });
 
-    return { jobsStore };
+    return { degreesStore, jobsStore };
   };
 
   it('fetches jobs', () => {
@@ -36,11 +39,19 @@ describe('JobListings', () => {
     expect(jobsStore.FETCH_JOBS).toHaveBeenCalled();
   });
 
+  it('fetches degrees', () => {
+    useRouteMock.mockReturnValue({ query: {} });
+
+    const { degreesStore } = renderJobListings();
+
+    expect(degreesStore.FETCH_DEGREES).toHaveBeenCalled();
+  });
+
   it('displays maximum of 10 jobs', async () => {
     useRouteMock.mockReturnValue({ query: { page: '1' } });
 
     const { jobsStore } = renderJobListings();
-    //@ts-expect-error
+    // @ts-expect-error
     jobsStore.FILTERED_JOBS = Array(15).fill({});
 
     const jobListings = await screen.findAllByRole('listitem');
@@ -72,7 +83,7 @@ describe('JobListings', () => {
       useRouteMock.mockReturnValue({ query: { page: '1' } });
 
       const { jobsStore } = renderJobListings();
-      //@ts-expect-error
+      // @ts-expect-error
       jobsStore.FILTERED_JOBS = Array(15).fill({});
 
       await screen.findAllByRole('listitem');
@@ -84,7 +95,7 @@ describe('JobListings', () => {
       useRouteMock.mockReturnValue({ query: { page: '1' } });
 
       const { jobsStore } = renderJobListings();
-      //@ts-expect-error
+      // @ts-expect-error
       jobsStore.FILTERED_JOBS = Array(15).fill({});
 
       await screen.findAllByRole('listitem');
@@ -98,7 +109,7 @@ describe('JobListings', () => {
       useRouteMock.mockReturnValue({ query: { page: '2' } });
 
       const { jobsStore } = renderJobListings();
-      //@ts-expect-error
+      // @ts-expect-error
       jobsStore.FILTERED_JOBS = Array(15).fill({});
 
       await screen.findAllByRole('listitem');
@@ -110,7 +121,7 @@ describe('JobListings', () => {
       useRouteMock.mockReturnValue({ query: { page: '2' } });
 
       const { jobsStore } = renderJobListings();
-      //@ts-expect-error
+      // @ts-expect-error
       jobsStore.FILTERED_JOBS = Array(15).fill({});
 
       await screen.findAllByRole('listitem');
