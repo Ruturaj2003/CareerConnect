@@ -10,7 +10,7 @@ export const useUserStore = defineStore('user', () => {
   const selectedDegrees = ref<string[]>([]);
   const selectedJobTypes = ref<string[]>([]);
   const selectedOrganizations = ref<string[]>([]);
-
+  const skillsSearchTerm = ref<string>('');
   const LOGIN_USER = () => {
     isLoggedIn.value = true;
   };
@@ -27,14 +27,20 @@ export const useUserStore = defineStore('user', () => {
     selectedJobTypes.value = jobTypes;
   };
 
+  const UPDATE_SKILLS_SEARCH_TERM = (term: string) => {
+    skillsSearchTerm.value = term;
+  };
+
   const CLEAR_USER_JOB_FILTER_SELECTIONS = () => {
     selectedDegrees.value = [];
     selectedJobTypes.value = [];
     selectedOrganizations.value = [];
+    skillsSearchTerm.value = '';
   };
 
   return {
     isLoggedIn,
+    skillsSearchTerm,
     selectedDegrees,
     selectedJobTypes,
     selectedOrganizations,
@@ -42,34 +48,7 @@ export const useUserStore = defineStore('user', () => {
     ADD_SELECTED_DEGREES,
     ADD_SELECTED_JOB_TYPES,
     ADD_SELECTED_ORGANIZATIONS,
+    UPDATE_SKILLS_SEARCH_TERM,
     CLEAR_USER_JOB_FILTER_SELECTIONS
   };
 });
-
-// export const useUserStore = defineStore('user', {
-//   state: (): UserState => ({
-//     isLoggedIn: false,
-//     selectedOrganizations: [],
-//     selectedJobTypes: [],
-//     selectedDegrees: []
-//   }),
-//   actions: {
-//     loginUser() {
-//       this.isLoggedIn = true;
-//     },
-//     [ADD_SELECTED_ORGANIZATIONS](organizations: string[]) {
-//       this.selectedOrganizations = organizations;
-//     },
-//     [ADD_SELECTED_JOB_TYPES](jobTypes: string[]) {
-//       this.selectedJobTypes = jobTypes;
-//     },
-//     [ADD_SELECTED_DEGREES](degrees: string[]) {
-//       this.selectedDegrees = degrees;
-//     },
-//     [CLEAR_USER_JOB_FILTER_SELECTIONS]() {
-//       this.selectedDegrees = [];
-//       this.selectedJobTypes = [];
-//       this.selectedOrganizations = [];
-//     }
-//   }
-// });
